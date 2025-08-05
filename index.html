@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Important Questions & Answers</title>
   <style>
     body {
@@ -16,6 +16,38 @@
       color: #333;
     }
 
+    /* Tabs container */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 15px;
+    }
+
+    /* Individual tab */
+    .tab {
+      padding: 12px 30px;
+      background-color: #eee;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #444;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .tab:hover {
+      background-color: #ddd;
+    }
+
+    .tab.active {
+      background-color: #007BFF;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0,123,255,0.4);
+    }
+
+    /* Accordion styles (your original) */
     .accordion {
       background-color: #eee;
       color: #444;
@@ -28,6 +60,8 @@
       font-size: 16px;
       transition: background-color 0.3s;
       margin-top: 10px;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
     .accordion:hover {
@@ -46,10 +80,29 @@
       border-left: 2px solid #007BFF;
       border-right: 2px solid #007BFF;
       border-bottom: 2px solid #007BFF;
+      border-radius: 0 0 5px 5px;
     }
 
     .panel p {
       margin: 10px 0;
+      white-space: pre-wrap; /* keep your pre formatting */
+      font-family: monospace;
+    }
+
+    /* Container for each tab content */
+    .tab-content {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Hide all tab content by default */
+    .tab-content > div {
+      display: none;
+    }
+
+    /* Show active tab content */
+    .tab-content > div.active {
+      display: block;
     }
   </style>
 </head>
@@ -57,81 +110,133 @@
 
   <h1>Important Questions & Answers</h1>
 
-  <button class="accordion">1. The Role of @Qualifier in Dependency Injection?</button>
-  <div class="panel">
-    <p><pre>
-
-      The @Qualifier annotation is used in scenarios where an interface has multiple implementation classes. 
-      When you are autowiring an interface, there can be ambiguity about which specific implementation class's object should be initialized. 
-      In such cases, the @Qualifier annotation is added to explicitly indicate which implementation class object must be injected for that particular interface type
-      
-      public interface NotificationService {
-          void send(String message);
-      }
-      
-      And you have two different implementations of this interface, one for email and one for SMS:
-      
-      // Email implementation
-      @Service("emailNotification") // Giving it a specific qualifier name
-      public class EmailNotificationService implements NotificationService {
-          @Override
-          public void send(String message) {
-              System.out.println("Sending email: " + message);
-          }
-      }
-      
-      // SMS implementation
-      @Service("smsNotification") // Giving it another specific qualifier name
-      public class SMSNotificationService implements NotificationService {
-          @Override
-          public void send(String message) {
-              System.out.println("Sending SMS: " + message);
-          }
-      }
-      
-      Now, if you want to inject a `NotificationService` into another class, Spring would not know which implementation to choose by default. 
-      This is where `@Qualifier` comes in. You use it along with `@Autowired` to specify which bean to inject:
-      
-      @Component
-      public class UserService {
-      
-          @Autowired
-          @Qualifier("emailNotification") // Explicitly requesting the EmailNotificationService
-          private NotificationService emailService;
-      
-          @Autowired
-          @Qualifier("smsNotification") // Explicitly requesting the SMSNotificationService
-          private NotificationService smsService;
-      
-          public void notifyUserByEmail(String user, String message) {
-              System.out.println("Notifying " + user + " via email:");
-              emailService.send(message);
-          }
-      
-          public void notifyUserBySms(String user, String message) {
-              System.out.println("Notifying " + user + " via SMS:");
-              smsService.send(message);
-          }
-      }
-      In this example, `@Qualifier("emailNotification")` ensures that the `emailService` field receives an instance of `EmailNotificationService`, 
-      and `@Qualifier("smsNotification")` ensures `smsService` receives an instance of `SMSNotificationService`, resolving the ambiguity that would otherwise occur.</pre></p>
+  <div class="tabs" role="tablist" aria-label="Question Categories">
+    <div class="tab active" role="tab" tabindex="0" aria-selected="true" aria-controls="spring-questions" id="tab-spring">Spring</div>
+    <div class="tab" role="tab" tabindex="-1" aria-selected="false" aria-controls="basics-questions" id="tab-basics">Basics</div>
   </div>
 
-  <button class="accordion">2. What is CSS?</button>
-  <div class="panel">
-    <p>CSS stands for Cascading Style Sheets. It is used for designing and customizing the look and feel of a webpage.</p>
-  </div>
+  <div class="tab-content">
+    <!-- Spring Questions -->
+    <div id="spring-questions" class="active" role="tabpanel" aria-labelledby="tab-spring">
+      <button class="accordion">1. The Role of @Qualifier in Dependency Injection?</button>
+      <div class="panel">
+        <p>
+The @Qualifier annotation is used in scenarios where an interface has multiple implementation classes. 
+When you are autowiring an interface, there can be ambiguity about which specific implementation class's object should be initialized. 
+In such cases, the @Qualifier annotation is added to explicitly indicate which implementation class object must be injected for that particular interface type
 
-  <button class="accordion">3. What is JavaScript?</button>
-  <div class="panel">
-    <p>JavaScript is a programming language used to make web pages interactive and dynamic.</p>
+public interface NotificationService {
+    void send(String message);
+}
+
+And you have two different implementations of this interface, one for email and one for SMS:
+
+// Email implementation
+@Service("emailNotification") // Giving it a specific qualifier name
+public class EmailNotificationService implements NotificationService {
+    @Override
+    public void send(String message) {
+        System.out.println("Sending email: " + message);
+    }
+}
+
+// SMS implementation
+@Service("smsNotification") // Giving it another specific qualifier name
+public class SMSNotificationService implements NotificationService {
+    @Override
+    public void send(String message) {
+        System.out.println("Sending SMS: " + message);
+    }
+}
+
+Now, if you want to inject a `NotificationService` into another class, Spring would not know which implementation to choose by default. 
+This is where `@Qualifier` comes in. You use it along with `@Autowired` to specify which bean to inject:
+
+@Component
+public class UserService {
+
+    @Autowired
+    @Qualifier("emailNotification") // Explicitly requesting the EmailNotificationService
+    private NotificationService emailService;
+
+    @Autowired
+    @Qualifier("smsNotification") // Explicitly requesting the SMSNotificationService
+    private NotificationService smsService;
+
+    public void notifyUserByEmail(String user, String message) {
+        System.out.println("Notifying " + user + " via email:");
+        emailService.send(message);
+    }
+
+    public void notifyUserBySms(String user, String message) {
+        System.out.println("Notifying " + user + " via SMS:");
+        smsService.send(message);
+    }
+}
+In this example, `@Qualifier("emailNotification")` ensures that the `emailService` field receives an instance of `EmailNotificationService`, 
+and `@Qualifier("smsNotification")` ensures `smsService` receives an instance of `SMSNotificationService`, resolving the ambiguity that would otherwise occur.
+        </p>
+      </div>
+    </div>
+
+    <!-- Basics Questions -->
+    <div id="basics-questions" role="tabpanel" aria-labelledby="tab-basics">
+      <button class="accordion">2. What is CSS?</button>
+      <div class="panel">
+        <p>CSS stands for Cascading Style Sheets. It is used for designing and customizing the look and feel of a webpage.</p>
+      </div>
+
+      <button class="accordion">3. What is JavaScript?</button>
+      <div class="panel">
+        <p>JavaScript is a programming language used to make web pages interactive and dynamic.</p>
+      </div>
+    </div>
   </div>
 
   <script>
-    const acc = document.querySelectorAll(".accordion");
-    acc.forEach(button => {
-      button.addEventListener("click", function() {
-        this.classList.toggle("active");
+    // Tab functionality
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content > div');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // deactivate all tabs
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+          t.setAttribute('tabindex', '-1');
+        });
+        // hide all tab contents
+        tabContents.forEach(tc => tc.classList.remove('active'));
+
+        // activate current tab
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        tab.setAttribute('tabindex', '0');
+
+        // show related tab content
+        const contentId = tab.getAttribute('aria-controls');
+        document.getElementById(contentId).classList.add('active');
+      });
+
+      // keyboard navigation for tabs
+      tab.addEventListener('keydown', (e) => {
+        let index = Array.from(tabs).indexOf(e.target);
+        if (e.key === 'ArrowRight') {
+          index = (index + 1) % tabs.length;
+          tabs[index].focus();
+        } else if (e.key === 'ArrowLeft') {
+          index = (index - 1 + tabs.length) % tabs.length;
+          tabs[index].focus();
+        }
+      });
+    });
+
+    // Accordion functionality
+    const accordions = document.querySelectorAll('.accordion');
+    accordions.forEach(button => {
+      button.addEventListener('click', function() {
+        this.classList.toggle('active');
         const panel = this.nextElementSibling;
         if (panel.style.display === "block") {
           panel.style.display = "none";
