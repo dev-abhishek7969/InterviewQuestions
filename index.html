@@ -162,7 +162,7 @@
   <h1>Important Questions & Answers</h1>
 
   <div class="tabs" role="tablist" aria-label="Question Categories">
-    <div class="tab active" role="tab" tabindex="0" aria-selected="true" aria-controls="html-questions" id="tab-html">HTML</div>
+    <div class="tab active" role="tab" tabindex="0" aria-selected="true" aria-controls="html-questions" id="tab-html">Spring</div>
     <div class="tab" role="tab" tabindex="-1" aria-selected="false" aria-controls="js-questions" id="tab-js">JavaScript</div>
   </div>
 
@@ -170,9 +170,64 @@
 
     <!-- HTML Questions -->
     <div id="html-questions" class="active" role="tabpanel" aria-labelledby="tab-html">
-      <button class="accordion" data-answer="HTML stands for HyperText Markup Language. It is used to design the structure of web pages using markup.">What is HTML?</button>
+      <button class="accordion" data-answer="The @Qualifier annotation is used in scenarios where an interface has multiple implementation classes. When you are autowiring an interface, there can be ambiguity about which specific implementation class's object should be initialized. In such cases, the @Qualifier annotation is added to explicitly indicate which implementation class object must be injected for that particular interface type">The Role of @Qualifier in Dependency Injection?</button>
 
-      <button class="accordion" data-answer="A semantic element clearly describes its meaning to both the browser and the developer, such as &lt;article&gt;, &lt;section&gt;, and &lt;footer&gt;.">What is a semantic element in HTML?</button>
+      <button class="accordion" data-answer="'\n'+
+      '\n'+
+      '```java\n'+
+      'public interface NotificationService {\n'+
+      '    void send(String message);\n'+
+      '}\n'+
+      '```\n'+
+      '\n'+
+      'And you have two different implementations of this interface, one for email and one for SMS:\n'+
+      '\n'+
+      '```java\n'+
+      '// Email implementation\n'+
+      '@Service("emailNotification") // Giving it a specific qualifier name\n'+
+      'public class EmailNotificationService implements NotificationService {\n'+
+      '    @Override\n'+
+      '    public void send(String message) {\n'+
+      '        System.out.println("Sending email: " + message);\n'+
+      '    }\n'+
+      '}\n'+
+      '\n'+
+      '// SMS implementation\n'+
+      '@Service("smsNotification") // Giving it another specific qualifier name\n'+
+      'public class SMSNotificationService implements NotificationService {\n'+
+      '    @Override\n'+
+      '    public void send(String message) {\n'+
+      '        System.out.println("Sending SMS: " + message);\n'+
+      '    }\n'+
+      '}\n'+
+      '```\n'+
+      '\n'+
+      'Now, if you want to inject a `NotificationService` into another class, Spring would not know which implementation to choose by default. This is where `@Qualifier` comes in. You use it along with `@Autowired` to specify which bean to inject:\n'+
+      '\n'+
+      '```java\n'+
+      '@Component\n'+
+      'public class UserService {\n'+
+      '\n'+
+      '    @Autowired\n'+
+      '    @Qualifier("emailNotification") // Explicitly requesting the EmailNotificationService\n'+
+      '    private NotificationService emailService;\n'+
+      '\n'+
+      '    @Autowired\n'+
+      '    @Qualifier("smsNotification") // Explicitly requesting the SMSNotificationService\n'+
+      '    private NotificationService smsService;\n'+
+      '\n'+
+      '    public void notifyUserByEmail(String user, String message) {\n'+
+      '        System.out.println("Notifying " + user + " via email:");\n'+
+      '        emailService.send(message);\n'+
+      '    }\n'+
+      '\n'+
+      '    public void notifyUserBySms(String user, String message) {\n'+
+      '        System.out.println("Notifying " + user + " via SMS:");\n'+
+      '        smsService.send(message);\n'+
+      '    }\n'+
+      '}\n'+
+      '```\n'+
+      'In this example, `@Qualifier("emailNotification")` ensures that the `emailService` field receives an instance of `EmailNotificationService`, and `@Qualifier("smsNotification")` ensures `smsService` receives an instance of `SMSNotificationService`, resolving the ambiguity that would otherwise occur.';">Explain @Qualifier with example</button>
     </div>
 
     <!-- JavaScript Questions -->
