@@ -1,159 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Important Questions & Answers</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f0f4f8;
-      margin: 0;
-      padding: 20px;
-      color: #333;
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 30px;
-      color: #004e89;
-      font-weight: 700;
-    }
-
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 30px;
-      gap: 10px;
-    }
-
-    .tab {
-      background: #007bff;
-      color: white;
-      padding: 12px 25px;
-      cursor: pointer;
-      border-radius: 25px;
-      font-weight: 600;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-      user-select: none;
-      box-shadow: 0 3px 6px rgba(0, 123, 255, 0.3);
-    }
-
-    .tab:hover {
-      background: #0056b3;
-      box-shadow: 0 6px 12px rgba(0, 86, 179, 0.5);
-    }
-
-    .tab.active {
-      background: #004080;
-      box-shadow: 0 8px 16px rgba(0, 64, 128, 0.7);
+      color: #333;
     }
 
     .accordion {
-      background-color: #e9f0f8;
-      color: #004e89;
+      background-color: #eee;
+      color: #444;
       cursor: pointer;
-      padding: 15px 20px;
+      padding: 15px;
       width: 100%;
       border: none;
       text-align: left;
       outline: none;
-      font-size: 18px;
-      font-weight: 600;
-      border-radius: 10px;
-      margin-top: 12px;
-      box-shadow: 0 2px 6px rgba(0, 78, 137, 0.15);
-      transition: background-color 0.3s ease;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      user-select: none;
-      position: relative;
+      font-size: 16px;
+      transition: background-color 0.3s;
+      margin-top: 10px;
     }
 
     .accordion:hover {
-      background-color: #c8dbf7;
-      box-shadow: 0 4px 12px rgba(0, 78, 137, 0.3);
+      background-color: #ccc;
     }
 
-    /* Arrow for accordion */
-    .accordion::after {
-      content: '\25BA'; /* right-pointing arrow */
-      font-size: 18px;
-      color: #004e89;
-      transition: transform 0.3s ease;
-      margin-left: 10px;
+    .active, .accordion:active {
+      background-color: #ccc;
     }
 
-    .accordion.active::after {
-      transform: rotate(90deg);
-    }
-
-    .tab-content {
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .tab-content > div {
+    .panel {
+      padding: 0 15px;
+      background-color: white;
       display: none;
+      overflow: hidden;
+      border-left: 2px solid #007BFF;
+      border-right: 2px solid #007BFF;
+      border-bottom: 2px solid #007BFF;
     }
 
-    .tab-content > div.active {
-      display: block;
-    }
-
-    /* Full page overlay for answers */
-    #answer-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      overflow-y: auto;
-    }
-
-    #answer-overlay.active {
-      display: flex;
-    }
-
-    #answer-content {
-      background: white;
-      max-width: 900px;
-      width: 100%;
-      border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-      position: relative;
-      font-size: 18px;
-      line-height: 1.6;
-      color: #222;
-      max-height: 80vh;
-      overflow-y: auto;
-    }
-
-    /* Close button */
-    #answer-close {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: #007bff;
-      border: none;
-      color: white;
-      font-size: 22px;
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 123, 255, 0.6);
-      transition: background-color 0.3s ease;
-      line-height: 1;
-    }
-
-    #answer-close:hover {
-      background: #0056b3;
+    .panel p {
+      margin: 10px 0;
     }
   </style>
 </head>
@@ -161,160 +57,90 @@
 
   <h1>Important Questions & Answers</h1>
 
-  <div class="tabs" role="tablist" aria-label="Question Categories">
-    <div class="tab active" role="tab" tabindex="0" aria-selected="true" aria-controls="html-questions" id="tab-html">Spring</div>
-    <div class="tab" role="tab" tabindex="-1" aria-selected="false" aria-controls="js-questions" id="tab-js">JavaScript</div>
+  <button class="accordion">1. What is HTML?</button>
+  <div class="panel">
+    <p>
+
+      ```java
+      public interface NotificationService {
+          void send(String message);
+      }
+      ```
+      
+      And you have two different implementations of this interface, one for email and one for SMS:
+      
+      ```java
+      // Email implementation
+      @Service("emailNotification") // Giving it a specific qualifier name
+      public class EmailNotificationService implements NotificationService {
+          @Override
+          public void send(String message) {
+              System.out.println("Sending email: " + message);
+          }
+      }
+      
+      // SMS implementation
+      @Service("smsNotification") // Giving it another specific qualifier name
+      public class SMSNotificationService implements NotificationService {
+          @Override
+          public void send(String message) {
+              System.out.println("Sending SMS: " + message);
+          }
+      }
+      ```
+      
+      Now, if you want to inject a `NotificationService` into another class, Spring would not know which implementation to choose by default. This is where `@Qualifier` comes in. You use it along with `@Autowired` to specify which bean to inject:
+      
+      ```java
+      @Component
+      public class UserService {
+      
+          @Autowired
+          @Qualifier("emailNotification") // Explicitly requesting the EmailNotificationService
+          private NotificationService emailService;
+      
+          @Autowired
+          @Qualifier("smsNotification") // Explicitly requesting the SMSNotificationService
+          private NotificationService smsService;
+      
+          public void notifyUserByEmail(String user, String message) {
+              System.out.println("Notifying " + user + " via email:");
+              emailService.send(message);
+          }
+      
+          public void notifyUserBySms(String user, String message) {
+              System.out.println("Notifying " + user + " via SMS:");
+              smsService.send(message);
+          }
+      }
+      ```
+      In this example, `@Qualifier("emailNotification")` ensures that the `emailService` field receives an instance of `EmailNotificationService`, and `@Qualifier("smsNotification")` ensures `smsService` receives an instance of `SMSNotificationService`, resolving the ambiguity that would otherwise occur.</p>
   </div>
 
-  <div class="tab-content">
-
-    <!-- HTML Questions -->
-    <div id="html-questions" class="active" role="tabpanel" aria-labelledby="tab-html">
-      <button class="accordion" data-answer="The @Qualifier annotation is used in scenarios where an interface has multiple implementation classes. When you are autowiring an interface, there can be ambiguity about which specific implementation class's object should be initialized. In such cases, the @Qualifier annotation is added to explicitly indicate which implementation class object must be injected for that particular interface type">The Role of @Qualifier in Dependency Injection?</button>
-
-      <button class="accordion" data-answer="'\n'+
-      '\n'+
-      '```java\n'+
-      'public interface NotificationService {\n'+
-      '    void send(String message);\n'+
-      '}\n'+
-      '```\n'+
-      '\n'+
-      'And you have two different implementations of this interface, one for email and one for SMS:\n'+
-      '\n'+
-      '```java\n'+
-      '// Email implementation\n'+
-      '@Service("emailNotification") // Giving it a specific qualifier name\n'+
-      'public class EmailNotificationService implements NotificationService {\n'+
-      '    @Override\n'+
-      '    public void send(String message) {\n'+
-      '        System.out.println("Sending email: " + message);\n'+
-      '    }\n'+
-      '}\n'+
-      '\n'+
-      '// SMS implementation\n'+
-      '@Service("smsNotification") // Giving it another specific qualifier name\n'+
-      'public class SMSNotificationService implements NotificationService {\n'+
-      '    @Override\n'+
-      '    public void send(String message) {\n'+
-      '        System.out.println("Sending SMS: " + message);\n'+
-      '    }\n'+
-      '}\n'+
-      '```\n'+
-      '\n'+
-      'Now, if you want to inject a `NotificationService` into another class, Spring would not know which implementation to choose by default. This is where `@Qualifier` comes in. You use it along with `@Autowired` to specify which bean to inject:\n'+
-      '\n'+
-      '```java\n'+
-      '@Component\n'+
-      'public class UserService {\n'+
-      '\n'+
-      '    @Autowired\n'+
-      '    @Qualifier("emailNotification") // Explicitly requesting the EmailNotificationService\n'+
-      '    private NotificationService emailService;\n'+
-      '\n'+
-      '    @Autowired\n'+
-      '    @Qualifier("smsNotification") // Explicitly requesting the SMSNotificationService\n'+
-      '    private NotificationService smsService;\n'+
-      '\n'+
-      '    public void notifyUserByEmail(String user, String message) {\n'+
-      '        System.out.println("Notifying " + user + " via email:");\n'+
-      '        emailService.send(message);\n'+
-      '    }\n'+
-      '\n'+
-      '    public void notifyUserBySms(String user, String message) {\n'+
-      '        System.out.println("Notifying " + user + " via SMS:");\n'+
-      '        smsService.send(message);\n'+
-      '    }\n'+
-      '}\n'+
-      '```\n'+
-      'In this example, `@Qualifier("emailNotification")` ensures that the `emailService` field receives an instance of `EmailNotificationService`, and `@Qualifier("smsNotification")` ensures `smsService` receives an instance of `SMSNotificationService`, resolving the ambiguity that would otherwise occur.';">Explain @Qualifier with example</button>
-    </div>
-
-    <!-- JavaScript Questions -->
-    <div id="js-questions" role="tabpanel" aria-labelledby="tab-js">
-      <button class="accordion" data-answer="JavaScript is a programming language used to make web pages interactive and dynamic.">What is JavaScript?</button>
-
-      <button class="accordion" data-answer="A closure is a function that has access to its outer function's scope even after the outer function has returned.">What is a closure in JavaScript?</button>
-    </div>
-
+  <button class="accordion">2. What is CSS?</button>
+  <div class="panel">
+    <p>CSS stands for Cascading Style Sheets. It is used for designing and customizing the look and feel of a webpage.</p>
   </div>
 
-  <!-- Full page overlay for answer display -->
-  <div id="answer-overlay" role="dialog" aria-modal="true" aria-labelledby="answer-title" tabindex="-1">
-    <div id="answer-content">
-      <button id="answer-close" aria-label="Close answer">&times;</button>
-      <h2 id="answer-title" style="margin-top:0; color:#004e89;">Answer</h2>
-      <p id="answer-text"></p>
-    </div>
+  <button class="accordion">3. What is JavaScript?</button>
+  <div class="panel">
+    <p>JavaScript is a programming language used to make web pages interactive and dynamic.</p>
   </div>
 
   <script>
-    // Tab switching logic
-    const tabs = document.querySelectorAll('.tab');
-    const tabContents = document.querySelectorAll('.tab-content > div');
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => {
-          t.classList.remove('active');
-          t.setAttribute('aria-selected', 'false');
-          t.setAttribute('tabindex', '-1');
-        });
-        tabContents.forEach(content => content.classList.remove('active'));
-
-        tab.classList.add('active');
-        tab.setAttribute('aria-selected', 'true');
-        tab.setAttribute('tabindex', '0');
-
-        const panelId = tab.getAttribute('aria-controls');
-        document.getElementById(panelId).classList.add('active');
-      });
-
-      tab.addEventListener('keydown', (e) => {
-        let index = Array.from(tabs).indexOf(e.target);
-        if (e.key === 'ArrowRight') {
-          index = (index + 1) % tabs.length;
-          tabs[index].focus();
-        } else if (e.key === 'ArrowLeft') {
-          index = (index - 1 + tabs.length) % tabs.length;
-          tabs[index].focus();
+    const acc = document.querySelectorAll(".accordion");
+    acc.forEach(button => {
+      button.addEventListener("click", function() {
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        if (panel.style.display === "block") {
+          panel.style.display = "none";
+        } else {
+          panel.style.display = "block";
         }
       });
     });
-
-    // Show full-page answer overlay on question click
-    const accordions = document.querySelectorAll('.accordion');
-    const overlay = document.getElementById('answer-overlay');
-    const answerText = document.getElementById('answer-text');
-    const answerClose = document.getElementById('answer-close');
-
-    accordions.forEach(button => {
-      button.addEventListener('click', () => {
-        const answer = button.getAttribute('data-answer');
-        answerText.textContent = answer;
-        overlay.classList.add('active');
-        overlay.focus();
-      });
-    });
-
-    // Close overlay on close button click
-    answerClose.addEventListener('click', () => {
-      overlay.classList.remove('active');
-    });
-
-    // Close overlay when clicking outside the content
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
-        overlay.classList.remove('active');
-      }
-    });
-
-    // Close overlay on Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === "Escape" && overlay.classList.contains('active')) {
-        overlay.classList.remove('active');
-      }
-    });
   </script>
+
 </body>
 </html>
