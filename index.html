@@ -145,7 +145,7 @@
 
       <button class="accordion">@Qualifier example</button>
       <div class="panel">
-        <p>public interface NotificationService {
+        <p><pre>public interface NotificationService {
           void send(String message);
       }
       And you have two different implementations of this interface, one for email and one for SMS:
@@ -188,7 +188,7 @@
               smsService.send(message);
           }
       }
-      In this example, @Qualifier("emailNotification") ensures that the emailService field receives an instance of EmailNotificationService, and @Qualifier("smsNotification") ensures smsService receives an instance of SMSNotificationService, resolving the ambiguity that would otherwise occur</p>
+      In this example, @Qualifier("emailNotification") ensures that the emailService field receives an instance of EmailNotificationService, and @Qualifier("smsNotification") ensures smsService receives an instance of SMSNotificationService, resolving the ambiguity that would otherwise occur</pre></p>
       </div>
 
       <button class="accordion"></button>
