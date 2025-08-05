@@ -1,83 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Important Questions & Answers</title>
   <style>
+    /* Reset and basics */
     body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background-color: #f9f9f9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 20px;
+      color: #333;
     }
 
     h1 {
       text-align: center;
-      color: #333;
+      margin-bottom: 30px;
+      color: #004e89;
+      font-weight: 700;
     }
 
-    .accordion {
-      background-color: #eee;
-      color: #444;
+    /* Tabs container */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 10px;
+    }
+
+    /* Individual tab styles */
+    .tab {
+      background: #007bff;
+      color: white;
+      padding: 12px 25px;
       cursor: pointer;
-      padding: 15px;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      box-shadow: 0 3px 6px rgba(0, 123, 255, 0.3);
+    }
+
+    .tab:hover {
+      background: #0056b3;
+      box-shadow: 0 6px 12px rgba(0, 86, 179, 0.5);
+    }
+
+    .tab.active {
+      background: #004080;
+      box-shadow: 0 8px 16px rgba(0, 64, 128, 0.7);
+    }
+
+    /* Accordion buttons */
+    .accordion {
+      background-color: #e9f0f8;
+      color: #004e89;
+      cursor: pointer;
+      padding: 15px 20px;
       width: 100%;
       border: none;
       text-align: left;
       outline: none;
-      font-size: 16px;
-      transition: background-color 0.3s;
-      margin-top: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 10px;
+      margin-top: 12px;
+      box-shadow: 0 2px 6px rgba(0, 78, 137, 0.15);
+      transition: background-color 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
     }
 
-    .accordion:hover {
-      background-color: #ccc;
+    .accordion:hover, .accordion.active {
+      background-color: #c8dbf7;
+      box-shadow: 0 4px 12px rgba(0, 78, 137, 0.3);
     }
 
-    .active, .accordion:active {
-      background-color: #ccc;
+    /* Arrow for accordion */
+    .accordion::after {
+      content: '\25BC'; /* down arrow */
+      font-size: 14px;
+      color: #004e89;
+      transition: transform 0.3s ease;
     }
 
+    .accordion.active::after {
+      transform: rotate(180deg);
+    }
+
+    /* Accordion panel */
     .panel {
-      padding: 0 15px;
+      padding: 15px 20px;
       background-color: white;
       display: none;
       overflow: hidden;
-      border-left: 2px solid #007BFF;
-      border-right: 2px solid #007BFF;
-      border-bottom: 2px solid #007BFF;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 2px 10px rgba(0, 78, 137, 0.1);
+      font-size: 16px;
+      color: #222;
+      margin-bottom: 10px;
+      line-height: 1.5;
+      border: 1px solid #d0d9e6;
+      border-top: none;
     }
 
-    .panel p {
-      margin: 10px 0;
+    /* Container for category content */
+    .tab-content {
+      max-width: 700px;
+      margin: 0 auto;
     }
+
+    /* Hide all tab content by default */
+    .tab-content > div {
+      display: none;
+    }
+
+    /* Show active tab content */
+    .tab-content > div.active {
+      display: block;
+    }
+
   </style>
 </head>
 <body>
 
   <h1>Important Questions & Answers</h1>
 
-  <button class="accordion">1. What is HTML?</button>
-  <div class="panel">
-    <p>HTML stands for HyperText Markup Language. It is used to design the structure of web pages using markup.</p>
+  <div class="tabs" role="tablist" aria-label="Question Categories">
+    <div class="tab active" role="tab" tabindex="0" aria-selected="true" aria-controls="html-questions" id="tab-html">HTML</div>
+    <div class="tab" role="tab" tabindex="-1" aria-selected="false" aria-controls="js-questions" id="tab-js">JavaScript</div>
   </div>
 
-  <button class="accordion">2. What is CSS?</button>
-  <div class="panel">
-    <p>CSS stands for Cascading Style Sheets. It is used for designing and customizing the look and feel of a webpage.</p>
-  </div>
+  <div class="tab-content">
 
-  <button class="accordion">3. What is JavaScript?</button>
-  <div class="panel">
-    <p>JavaScript is a programming language used to make web pages interactive and dynamic.</p>
+    <!-- HTML Questions -->
+    <div id="html-questions" class="active" role="tabpanel" aria-labelledby="tab-html">
+      <button class="accordion">What is HTML?</button>
+      <div class="panel">
+        <p>HTML stands for HyperText Markup Language. It is used to design the structure of web pages using markup.</p>
+      </div>
+
+      <button class="accordion">What is a semantic element in HTML?</button>
+      <div class="panel">
+        <p>A semantic element clearly describes its meaning to both the browser and the developer, such as &lt;article&gt;, &lt;section&gt;, and &lt;footer&gt;.</p>
+      </div>
+    </div>
+
+    <!-- JavaScript Questions -->
+    <div id="js-questions" role="tabpanel" aria-labelledby="tab-js">
+      <button class="accordion">What is JavaScript?</button>
+      <div class="panel">
+        <p>JavaScript is a programming language used to make web pages interactive and dynamic.</p>
+      </div>
+
+      <button class="accordion">What is a closure in JavaScript?</button>
+      <div class="panel">
+        <p>A closure is a function that has access to its outer function's scope even after the outer function has returned.</p>
+      </div>
+    </div>
+
   </div>
 
   <script>
-    const acc = document.querySelectorAll(".accordion");
-    acc.forEach(button => {
-      button.addEventListener("click", function() {
-        this.classList.toggle("active");
-        const panel = this.nextElementSibling;
+    // Tab switching logic
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content > div');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Deactivate all tabs
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+          t.setAttribute('tabindex', '-1');
+        });
+
+        // Hide all tab content
+        tabContents.forEach(content => content.classList.remove('active'));
+
+        // Activate clicked tab
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        tab.setAttribute('tabindex', '0');
+
+        // Show related content
+        const panelId = tab.getAttribute('aria-controls');
+        document.getElementById(panelId).classList.add('active');
+      });
+
+      // Allow keyboard navigation (left/right arrows)
+      tab.addEventListener('keydown', (e) => {
+        let index = Array.from(tabs).indexOf(e.target);
+        if (e.key === 'ArrowRight') {
+          index = (index + 1) % tabs.length;
+          tabs[index].focus();
+        } else if (e.key === 'ArrowLeft') {
+          index = (index - 1 + tabs.length) % tabs.length;
+          tabs[index].focus();
+        }
+      });
+    });
+
+    // Accordion toggle logic
+    const accordions = document.querySelectorAll('.accordion');
+    accordions.forEach(button => {
+      button.addEventListener('click', () => {
+        button.classList.toggle('active');
+        const panel = button.nextElementSibling;
         if (panel.style.display === "block") {
           panel.style.display = "none";
         } else {
@@ -86,6 +218,5 @@
       });
     });
   </script>
-
 </body>
 </html>
