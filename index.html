@@ -57,19 +57,20 @@
 
   <h1>Important Questions & Answers</h1>
 
-  <button class="accordion">1. What is HTML?</button>
+  <button class="accordion">1. The Role of @Qualifier in Dependency Injection?</button>
   <div class="panel">
     <p><pre>
 
-      ```java
+      The @Qualifier annotation is used in scenarios where an interface has multiple implementation classes. 
+      When you are autowiring an interface, there can be ambiguity about which specific implementation class's object should be initialized. 
+      In such cases, the @Qualifier annotation is added to explicitly indicate which implementation class object must be injected for that particular interface type
+      
       public interface NotificationService {
           void send(String message);
       }
-      ```
       
       And you have two different implementations of this interface, one for email and one for SMS:
       
-      ```java
       // Email implementation
       @Service("emailNotification") // Giving it a specific qualifier name
       public class EmailNotificationService implements NotificationService {
@@ -87,11 +88,10 @@
               System.out.println("Sending SMS: " + message);
           }
       }
-      ```
       
-      Now, if you want to inject a `NotificationService` into another class, Spring would not know which implementation to choose by default. This is where `@Qualifier` comes in. You use it along with `@Autowired` to specify which bean to inject:
+      Now, if you want to inject a `NotificationService` into another class, Spring would not know which implementation to choose by default. 
+      This is where `@Qualifier` comes in. You use it along with `@Autowired` to specify which bean to inject:
       
-      ```java
       @Component
       public class UserService {
       
@@ -113,8 +113,8 @@
               smsService.send(message);
           }
       }
-      ```
-      In this example, `@Qualifier("emailNotification")` ensures that the `emailService` field receives an instance of `EmailNotificationService`, and `@Qualifier("smsNotification")` ensures `smsService` receives an instance of `SMSNotificationService`, resolving the ambiguity that would otherwise occur.</pre></p>
+      In this example, `@Qualifier("emailNotification")` ensures that the `emailService` field receives an instance of `EmailNotificationService`, 
+      and `@Qualifier("smsNotification")` ensures `smsService` receives an instance of `SMSNotificationService`, resolving the ambiguity that would otherwise occur.</pre></p>
   </div>
 
   <button class="accordion">2. What is CSS?</button>
