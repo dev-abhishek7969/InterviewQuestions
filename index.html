@@ -130,7 +130,7 @@
   <h1>Important Questions & Answers</h1>
 
   <div class="tabs" role="tablist" aria-label="Question Categories">
-    <div class="tab active" role="tab" tabindex="0" aria-selected="true" aria-controls="html-questions" id="tab-html">HTML</div>
+    <div class="tab active" role="tab" tabindex="0" aria-selected="true" aria-controls="html-questions" id="tab-html">SpringBoot</div>
     <div class="tab" role="tab" tabindex="-1" aria-selected="false" aria-controls="js-questions" id="tab-js">JavaScript</div>
   </div>
 
@@ -138,15 +138,65 @@
 
     <!-- HTML Questions -->
     <div id="html-questions" class="active" role="tabpanel" aria-labelledby="tab-html">
-      <button class="accordion">What is HTML?</button>
+      <button class="accordion">The Role of @Qualifier in Dependency Injection</button>
       <div class="panel">
-        <p>HTML stands for HyperText Markup Language. It is used to design the structure of web pages using markup.</p>
+        <p>The @Qualifier annotation is used in scenarios where an interface has multiple implementation classes. When you are autowiring an interface, there can be ambiguity about which specific implementation class's object should be initialized. In such cases, the @Qualifier annotation is added to explicitly indicate which implementation class object must be injected for that particular interface type</p>
       </div>
 
-      <button class="accordion">What is a semantic element in HTML?</button>
+      <button class="accordion">@Qualifier example</button>
       <div class="panel">
-        <p>A semantic element clearly describes its meaning to both the browser and the developer, such as &lt;article&gt;, &lt;section&gt;, and &lt;footer&gt;.</p>
+        <p>public interface NotificationService {
+          void send(String message);
+      }
+      And you have two different implementations of this interface, one for email and one for SMS:
+      // Email implementation
+      @Service("emailNotification") // Giving it a specific qualifier name
+      public class EmailNotificationService implements NotificationService {
+          @Override
+          public void send(String message) {
+              System.out.println("Sending email: " + message);
+          }
+      }
+      
+      // SMS implementation
+      @Service("smsNotification") // Giving it another specific qualifier name
+      public class SMSNotificationService implements NotificationService {
+          @Override
+          public void send(String message) {
+              System.out.println("Sending SMS: " + message);
+          }
+      }
+      Now, if you want to inject a NotificationService into another class, Spring would not know which implementation to choose by default. This is where @Qualifier comes in. You use it along with @Autowired to specify which bean to inject:
+      @Component
+      public class UserService {
+      
+          @Autowired
+          @Qualifier("emailNotification") // Explicitly requesting the EmailNotificationService
+          private NotificationService emailService;
+      
+          @Autowired
+          @Qualifier("smsNotification") // Explicitly requesting the SMSNotificationService
+          private NotificationService smsService;
+      
+          public void notifyUserByEmail(String user, String message) {
+              System.out.println("Notifying " + user + " via email:");
+              emailService.send(message);
+          }
+      
+          public void notifyUserBySms(String user, String message) {
+              System.out.println("Notifying " + user + " via SMS:");
+              smsService.send(message);
+          }
+      }
+      In this example, @Qualifier("emailNotification") ensures that the emailService field receives an instance of EmailNotificationService, and @Qualifier("smsNotification") ensures smsService receives an instance of SMSNotificationService, resolving the ambiguity that would otherwise occur</p>
       </div>
+
+      <button class="accordion"></button>
+      <div class="panel">
+        <p> </p>
+      </div>
+
+
     </div>
 
     <!-- JavaScript Questions -->
