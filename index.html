@@ -112,7 +112,7 @@
 
   <div class="tabs" role="tablist" aria-label="Question Categories">
     <div class="tab active" role="tab" tabindex="0" aria-selected="true" aria-controls="spring-questions" id="tab-spring">Spring</div>
-    <div class="tab" role="tab" tabindex="-1" aria-selected="false" aria-controls="basics-questions" id="tab-basics">Basics</div>
+    <div class="tab" role="tab" tabindex="-1" aria-selected="false" aria-controls="basics-questions" id="tab-basics">Core Java</div>
   </div>
 
   <div class="tab-content">
@@ -177,19 +177,176 @@ In this example, `@Qualifier("emailNotification")` ensures that the `emailServic
 and `@Qualifier("smsNotification")` ensures `smsService` receives an instance of `SMSNotificationService`, resolving the ambiguity that would otherwise occur.
         </p>
       </div>
+	  
+	  <button class="accordion">2. What is CSS?</button>
+      <div class="panel">
+        <p>CSS stands for Cascading Style Sheets. It is used for designing and customizing the look and feel of a webpage.</p>
+      </div>
+	  
     </div>
 
     <!-- Basics Questions -->
     <div id="basics-questions" role="tabpanel" aria-labelledby="tab-basics">
-      <button class="accordion">2. What is CSS?</button>
+      
+	  <button class="accordion">1. What is the importance of hash code and equals method?</button>
       <div class="panel">
-        <p>CSS stands for Cascading Style Sheets. It is used for designing and customizing the look and feel of a webpage.</p>
+        <p>The `hashCode` and `equals` methods are important, especially in the context of how data structures like `HashMap` operate internally.
+
+Here's why they are important:
+
+*   **Internal `HashMap` Operation**: Internally, `HashMap` relies on these methods to determine where to place objects and how to find them.
+
+*   **Custom Objects**: When you're working with **custom-defined objects**, such as a list of `Employee` class instances, `HashMap` needs to know how to calculate a hash code for these objects and how to check for equality.
+
+*   **Proper Object Placement**: The `hashCode` and `equals` methods ensure that objects are **properly placed into the `HashMap`**. Without correct implementations for custom objects, `HashMap` might not function as expected, leading to issues like duplicate entries or an inability to retrieve stored objects.</p>
       </div>
 
-      <button class="accordion">3. What is JavaScript?</button>
+      <button class="accordion">What are the benefits of Concurrent HashMap</button>
       <div class="panel">
-        <p>JavaScript is a programming language used to make web pages interactive and dynamic.</p>
+        <p>| Benefit                    | Explanation                                    |
+| -------------------------- | ---------------------------------------------- |
+| Thread-safe concurrency    | Multiple threads can read/write safely         |
+| High scalability           | Fine-grained locking improves throughput       |
+| Non-blocking reads         | Reads don’t block even during writes           |
+| Better performance         | Efficient under heavy multi-threading          |
+| Weakly consistent iterator | Safe to iterate during concurrent modification |
+| No null keys/values        | Avoids ambiguity and errors                    |
+</p>
       </div>
+	  
+	  
+	  <button class="accordion">How to create immutable class in java</button>
+      <div class="panel">
+        <p>public final class Person {
+    private final String name;
+    private final int age;
+    private final List<String> hobbies;  // mutable collection
+
+    public Person(String name, int age, List<String> hobbies) {
+        this.name = name;
+        this.age = age;
+        // Defensive copy to protect internal list from external changes
+        this.hobbies = new ArrayList<>(hobbies);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    // Return a copy to protect internal state
+    public List<String> getHobbies() {
+        return new ArrayList<>(hobbies);
+    }
+}
+</p>
+      </div>
+	  
+	  
+	  <button class="accordion">What is the difference between finally and finalize?</button>
+      <div class="panel">
+        <p>| Aspect             | `finally`                                                                                              | `finalize`                                                                         |
+| ------------------ | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------- |
+| What is it?        | A block used in **exception handling**                                                                 | A **method** called by the garbage collector                                       |
+| Purpose            | To execute code **after try/catch**, regardless of exception thrown or not                             | To perform cleanup before the object is garbage collected                          |
+| Usage context      | Used along with `try` and `catch` blocks                                                               | Defined inside a class as `protected void finalize()` method                       |
+| When executed?     | Immediately after the `try` and `catch` blocks finish (always executed except when JVM exits abruptly) | Called **sometime before object is destroyed** by GC (not guaranteed when exactly) |
+| Typical use        | Closing resources like files, streams, releasing locks                                                 | Cleanup actions like freeing native resources (though discouraged)                 |
+| Syntax example     | `java try { ... } catch(Exception e) { ... } finally { ... } `                                         | `java @Override protected void finalize() throws Throwable { ... } `               |
+| Can be overridden? | Not applicable (it's a language construct)                                                             | Yes, classes can override `finalize()` method                                      |
+| Reliability        | Very reliable for cleanup                                                                              | Unreliable, because GC timing is unpredictable; deprecated since Java 9            |
+</p>
+      </div>
+	  
+	  <button class="accordion">What is AutoClosable interface??</button>
+      <div class="panel">
+        <p>AutoCloseable is a functional interface.BufferedReader implements AutoCloseable.
+
+The close() method is called automatically at the end of the try block, even if exceptions occur. </p>
+      </div>
+	  
+	  <button class="accordion">What are the reasons for memory leak??</button>
+      <div class="panel">
+        <p>Unintentional Object Retention
+
+Objects are kept referenced unintentionally, e.g., stored in static collections, caches, or long-lived objects.
+Example: Adding objects to a static List and never removing them.
+
+Listeners and Callbacks Not Removed,GUI components or frameworks holding references to listeners after they are no longer needed.
+
+Inner Classes and Anonymous Classes
+Non-static inner classes hold implicit reference to the outer class instance.
+
+How to avoid memory leaks:
+Remove references to objects when no longer needed.
+
+Properly unregister listeners and callbacks.
+
+Use weak references or WeakHashMap for caches if appropriate.
+
+Avoid unnecessary static references.
+
+Clean up ThreadLocal values.
+</p>
+      </div>
+	  
+	  <button class="accordion">What is volatile keyword?</button>
+      <div class="panel">
+        <p>| Aspect                                | Explanation                                                                                                                                                         |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Visibility                            | Updates are flushed to main memory immediately                                                                                                                      |
+| Atomicity                             | Only guarantees atomic reads/writes for **primitive types** except `long` and `double` (Java 5+ atomic too) but **not for compound actions** like increment (`x++`) |
+| Use case                              | Flags, status indicators, or variables shared between threads where atomicity is not required                                                                       |
+| Not a replacement for synchronization | Does not provide mutual exclusion or protect compound operations                                                                                                    |
+</p>
+      </div>
+	  
+	  <button class="accordion">What is the use of method reference?</button>
+      <div class="panel">
+        <p>Simplify code by removing unnecessary lambda syntax.
+
+Make code more readable and expressive.
+
+Perfect for functional programming with streams and lambdas.</p>
+      </div>
+	  
+	  <button class="accordion">What is indexing (in database)?</button>
+      <div class="panel">
+        <p>An index is a separate data structure (usually a B-tree or hash) that stores a sorted copy or pointers of one or more columns from a table.
+
+It allows the database to efficiently look up records without scanning the entire table.
+
+Example:
+If you have a users table with thousands of rows and you frequently search by email, creating an index on the email column makes those lookups much faster.
+
+CREATE INDEX idx_email ON users(email);
+
+</p>
+      </div>
+	  
+	  <button class="accordion">?</button>
+      <div class="panel">
+        <p></p>
+      </div>
+	  
+	  <button class="accordion">?</button>
+      <div class="panel">
+        <p></p>
+      </div>
+	  
+	  <button class="accordion">?</button>
+      <div class="panel">
+        <p></p>
+      </div>
+	  
+	  <button class="accordion">?</button>
+      <div class="panel">
+        <p></p>
+      </div>
+	  
     </div>
   </div>
 
