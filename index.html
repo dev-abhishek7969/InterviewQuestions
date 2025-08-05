@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Important Questions & Answers</title>
   <style>
-    /* Reset and basics */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f0f4f8;
@@ -21,7 +20,6 @@
       font-weight: 700;
     }
 
-    /* Tabs container */
     .tabs {
       display: flex;
       justify-content: center;
@@ -29,7 +27,6 @@
       gap: 10px;
     }
 
-    /* Individual tab styles */
     .tab {
       background: #007bff;
       color: white;
@@ -52,7 +49,6 @@
       box-shadow: 0 8px 16px rgba(0, 64, 128, 0.7);
     }
 
-    /* Accordion buttons */
     .accordion {
       background-color: #e9f0f8;
       color: #004e89;
@@ -72,57 +68,93 @@
       justify-content: space-between;
       align-items: center;
       user-select: none;
+      position: relative;
     }
 
-    .accordion:hover, .accordion.active {
+    .accordion:hover {
       background-color: #c8dbf7;
       box-shadow: 0 4px 12px rgba(0, 78, 137, 0.3);
     }
 
     /* Arrow for accordion */
     .accordion::after {
-      content: '\25BC'; /* down arrow */
-      font-size: 14px;
+      content: '\25BA'; /* right-pointing arrow */
+      font-size: 18px;
       color: #004e89;
       transition: transform 0.3s ease;
+      margin-left: 10px;
     }
 
     .accordion.active::after {
-      transform: rotate(180deg);
+      transform: rotate(90deg);
     }
 
-    /* Accordion panel */
-    .panel {
-      padding: 15px 20px;
-      background-color: white;
-      display: none;
-      overflow: hidden;
-      border-radius: 0 0 10px 10px;
-      box-shadow: 0 2px 10px rgba(0, 78, 137, 0.1);
-      font-size: 16px;
-      color: #222;
-      margin-bottom: 10px;
-      line-height: 1.5;
-      border: 1px solid #d0d9e6;
-      border-top: none;
-    }
-
-    /* Container for category content */
     .tab-content {
       max-width: 700px;
       margin: 0 auto;
     }
 
-    /* Hide all tab content by default */
     .tab-content > div {
       display: none;
     }
 
-    /* Show active tab content */
     .tab-content > div.active {
       display: block;
     }
 
+    /* Full page overlay for answers */
+    #answer-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    #answer-overlay.active {
+      display: flex;
+    }
+
+    #answer-content {
+      background: white;
+      max-width: 900px;
+      width: 100%;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      position: relative;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #222;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    /* Close button */
+    #answer-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #007bff;
+      border: none;
+      color: white;
+      font-size: 22px;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 123, 255, 0.6);
+      transition: background-color 0.3s ease;
+      line-height: 1;
+    }
+
+    #answer-close:hover {
+      background: #0056b3;
+    }
   </style>
 </head>
 <body>
@@ -130,7 +162,7 @@
   <h1>Important Questions & Answers</h1>
 
   <div class="tabs" role="tablist" aria-label="Question Categories">
-    <div class="tab active" role="tab" tabindex="0" aria-selected="true" aria-controls="html-questions" id="tab-html">SpringBoot</div>
+    <div class="tab active" role="tab" tabindex="0" aria-selected="true" aria-controls="html-questions" id="tab-html">HTML</div>
     <div class="tab" role="tab" tabindex="-1" aria-selected="false" aria-controls="js-questions" id="tab-js">JavaScript</div>
   </div>
 
@@ -138,80 +170,27 @@
 
     <!-- HTML Questions -->
     <div id="html-questions" class="active" role="tabpanel" aria-labelledby="tab-html">
-      <button class="accordion">The Role of @Qualifier in Dependency Injection</button>
-      <div class="panel">
-        <p>The @Qualifier annotation is used in scenarios where an interface has multiple implementation classes. When you are autowiring an interface, there can be ambiguity about which specific implementation class's object should be initialized. In such cases, the @Qualifier annotation is added to explicitly indicate which implementation class object must be injected for that particular interface type</p>
-      </div>
+      <button class="accordion" data-answer="HTML stands for HyperText Markup Language. It is used to design the structure of web pages using markup.">What is HTML?</button>
 
-      <button class="accordion">@Qualifier example</button>
-      <div class="panel">
-        <p><pre>public interface NotificationService {
-          void send(String message);
-      }
-      And you have two different implementations of this interface, one for email and one for SMS:
-      // Email implementation
-      @Service("emailNotification") // Giving it a specific qualifier name
-      public class EmailNotificationService implements NotificationService {
-          @Override
-          public void send(String message) {
-              System.out.println("Sending email: " + message);
-          }
-      }
-      
-      // SMS implementation
-      @Service("smsNotification") // Giving it another specific qualifier name
-      public class SMSNotificationService implements NotificationService {
-          @Override
-          public void send(String message) {
-              System.out.println("Sending SMS: " + message);
-          }
-      }
-      Now, if you want to inject a NotificationService into another class, Spring would not know which implementation to choose by default. This is where @Qualifier comes in. You use it along with @Autowired to specify which bean to inject:
-      @Component
-      public class UserService {
-      
-          @Autowired
-          @Qualifier("emailNotification") // Explicitly requesting the EmailNotificationService
-          private NotificationService emailService;
-      
-          @Autowired
-          @Qualifier("smsNotification") // Explicitly requesting the SMSNotificationService
-          private NotificationService smsService;
-      
-          public void notifyUserByEmail(String user, String message) {
-              System.out.println("Notifying " + user + " via email:");
-              emailService.send(message);
-          }
-      
-          public void notifyUserBySms(String user, String message) {
-              System.out.println("Notifying " + user + " via SMS:");
-              smsService.send(message);
-          }
-      }
-      In this example, @Qualifier("emailNotification") ensures that the emailService field receives an instance of EmailNotificationService, and @Qualifier("smsNotification") ensures smsService receives an instance of SMSNotificationService, resolving the ambiguity that would otherwise occur</pre></p>
-      </div>
-
-      <button class="accordion"></button>
-      <div class="panel">
-        <p> </p>
-      </div>
-
-
+      <button class="accordion" data-answer="A semantic element clearly describes its meaning to both the browser and the developer, such as &lt;article&gt;, &lt;section&gt;, and &lt;footer&gt;.">What is a semantic element in HTML?</button>
     </div>
 
     <!-- JavaScript Questions -->
     <div id="js-questions" role="tabpanel" aria-labelledby="tab-js">
-      <button class="accordion">What is JavaScript?</button>
-      <div class="panel">
-        <p>JavaScript is a programming language used to make web pages interactive and dynamic.</p>
-      </div>
+      <button class="accordion" data-answer="JavaScript is a programming language used to make web pages interactive and dynamic.">What is JavaScript?</button>
 
-      <button class="accordion">What is a closure in JavaScript?</button>
-      <div class="panel">
-        <p>A closure is a function that has access to its outer function's scope even after the outer function has returned.</p>
-      </div>
+      <button class="accordion" data-answer="A closure is a function that has access to its outer function's scope even after the outer function has returned.">What is a closure in JavaScript?</button>
     </div>
 
+  </div>
+
+  <!-- Full page overlay for answer display -->
+  <div id="answer-overlay" role="dialog" aria-modal="true" aria-labelledby="answer-title" tabindex="-1">
+    <div id="answer-content">
+      <button id="answer-close" aria-label="Close answer">&times;</button>
+      <h2 id="answer-title" style="margin-top:0; color:#004e89;">Answer</h2>
+      <p id="answer-text"></p>
+    </div>
   </div>
 
   <script>
@@ -221,27 +200,21 @@
 
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        // Deactivate all tabs
         tabs.forEach(t => {
           t.classList.remove('active');
           t.setAttribute('aria-selected', 'false');
           t.setAttribute('tabindex', '-1');
         });
-
-        // Hide all tab content
         tabContents.forEach(content => content.classList.remove('active'));
 
-        // Activate clicked tab
         tab.classList.add('active');
         tab.setAttribute('aria-selected', 'true');
         tab.setAttribute('tabindex', '0');
 
-        // Show related content
         const panelId = tab.getAttribute('aria-controls');
         document.getElementById(panelId).classList.add('active');
       });
 
-      // Allow keyboard navigation (left/right arrows)
       tab.addEventListener('keydown', (e) => {
         let index = Array.from(tabs).indexOf(e.target);
         if (e.key === 'ArrowRight') {
@@ -254,18 +227,38 @@
       });
     });
 
-    // Accordion toggle logic
+    // Show full-page answer overlay on question click
     const accordions = document.querySelectorAll('.accordion');
+    const overlay = document.getElementById('answer-overlay');
+    const answerText = document.getElementById('answer-text');
+    const answerClose = document.getElementById('answer-close');
+
     accordions.forEach(button => {
       button.addEventListener('click', () => {
-        button.classList.toggle('active');
-        const panel = button.nextElementSibling;
-        if (panel.style.display === "block") {
-          panel.style.display = "none";
-        } else {
-          panel.style.display = "block";
-        }
+        const answer = button.getAttribute('data-answer');
+        answerText.textContent = answer;
+        overlay.classList.add('active');
+        overlay.focus();
       });
+    });
+
+    // Close overlay on close button click
+    answerClose.addEventListener('click', () => {
+      overlay.classList.remove('active');
+    });
+
+    // Close overlay when clicking outside the content
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove('active');
+      }
+    });
+
+    // Close overlay on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === "Escape" && overlay.classList.contains('active')) {
+        overlay.classList.remove('active');
+      }
     });
   </script>
 </body>
