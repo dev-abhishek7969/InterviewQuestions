@@ -327,9 +327,19 @@ CREATE INDEX idx_email ON users(email);
 </p>
       </div>
 	  
-	  <button class="accordion">?</button>
+	  <button class="accordion">What is the difference between sleep and wait method?</button>
       <div class="panel">
-        <p></p>
+        <p>The sleep() and wait() methods are both used in multithreading in Java
+          wait() → ✅ Must be called from a synchronized block or method (or it throws IllegalMonitorStateException).
+          Releases the lock on the object it's called on while waiting.
+          Wakes up either by:notify() or notifyAll() (from another thread) Or if a timeout occurs (if specified)
+
+          Thread.sleep(1000); 
+
+          synchronized(obj) {
+          obj.wait(); // Waits until notified, and releases the monitor
+}
+        </p>
       </div>
 	  
 	  <button class="accordion">?</button>
